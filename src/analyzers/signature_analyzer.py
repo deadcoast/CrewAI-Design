@@ -1,32 +1,24 @@
-import ast
 import contextlib
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional
 
 import libcst as cst
-import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 import rustworkx as rx
 import torch
 import torch.nn.functional as F
 from rich.console import Console
-from rich.progress import Progress, SpinnerColumn
 from scipy.spatial.distance import cosine
-from sklearn.cluster import DBSCAN, AgglomerativeClustering
-from sklearn.decomposition import PCA
+from sklearn.cluster import DBSCAN
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
-from .models import ComponentInfo, ComponentTypeInfo, RustTypeHint
 from .types import SignatureMetrics
-from .utils import get_signature_components
 from .visitors.signature_visitor import SignatureVisitor
 
 console = Console()
-rx = None
 
 
 @dataclass

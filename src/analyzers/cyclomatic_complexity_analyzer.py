@@ -1,28 +1,12 @@
 """cyclomatic_complexity_analyzer class"""
 
-import ast
-import os
-import sys
-from collections import defaultdict
-from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass, field
 from pathlib import Path
-from typing import DefaultDict, Dict, List, Optional, Set, Tuple
+from typing import List, Optional, Set
 
-import black
-import isort
 import libcst as cst
-import matplotlib.pyplot as plt
-import mypy.api
 import networkx as nx
 import numpy as np
-import sympy
-import toml
 from collectors.import_collector_visitor import ImportCollectorVisitor
-from radon.complexity import cc_visit
-from radon.metrics import mi_visit
-from rich.console import Console
-from rich.table import Table
 
 
 class ImportNode:

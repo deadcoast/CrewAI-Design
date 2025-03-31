@@ -23,8 +23,8 @@ def xicor(x, y, ties="auto"):
     nominator = np.sum(np.abs(np.diff(r)))
 
     if ties:
-        l = rankdata(y, method="max")
-        denominator = 2 * np.sum(l * (n - l))
+        max_ranks = rankdata(y, method="max")
+        denominator = 2 * np.sum(max_ranks * (n - max_ranks))
         nominator *= n
     else:
         denominator = np.power(n, 2) - 1

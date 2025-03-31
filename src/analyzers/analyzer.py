@@ -11,16 +11,12 @@ Features:
 """
 
 import ast
-from collections import defaultdict
+import contextlib
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
-from functools import partial
-from itertools import combinations
 from pathlib import Path
-from typing import DefaultDict, Dict, List, Optional, Set, Tuple
+from typing import Dict, List, Optional, Set
 
-import black
-import isort
 import libcst as cst
 import matplotlib.pyplot as plt
 import mypy.api
@@ -179,7 +175,7 @@ class EnhancedAnalyzer:
 
     def _analyze_circular_dependencies(self):
         """Detect and analyze circular dependencies"""
-        try:
+        with contextlib.suppress(nx.NetworkXNoCycle):
             cycles = list(nx.simple_cycles(self.import_graph))
             self.metrics.circular_deps = [
                 cycle for cycle in cycles if len(cycle) > 1  # Exclude self-references
@@ -189,29 +185,22 @@ class EnhancedAnalyzer:
             if self.metrics.circular_deps:
                 self._suggest_dependency_fixes()
 
-        except nx.NetworkXNoCycle:
-            pass
-
     def _suggest_dependency_fixes(self):
         """Generate suggestions for fixing circular dependencies"""
         for cycle in self.metrics.circular_deps:
-            # Find the module with highest complexity as potential refactor target
-            cycle_complexities = [
+            if cycle_complexities := [
                 (module, self.modules[module].complexity)
                 for module in cycle
                 if module in self.modules
-            ]
-            if cycle_complexities:
+            ]:
                 target_module = max(cycle_complexities, key=lambda x: x[1])[0]
                 console.print(
                     f"[yellow]Suggestion: Consider refactoring {target_module}"
                 )
 
-                # Find common functionalities that could be extracted
-                common_imports = set.intersection(
+                if common_imports := set.intersection(
                     *[self.modules[m].dependencies for m in cycle if m in self.modules]
-                )
-                if common_imports:
+                ):
                     console.print(
                         f"  Consider extracting common dependencies: {common_imports}"
                     )
@@ -278,7 +267,7 @@ class EnhancedAnalyzer:
         self.metrics.total_imports = self.import_graph.number_of_edges()
 
         # Calculate additional graph metrics
-        try:
+        with contextlib.suppress(nx.NetworkXError):
             # Eigenvector centrality for module importance
             centrality = nx.eigenvector_centrality_numpy(self.import_graph)
 
@@ -286,9 +275,6 @@ class EnhancedAnalyzer:
             for module_name, score in centrality.items():
                 if module_name in self.modules:
                     self.modules[module_name].cohesion_score = score
-
-        except nx.NetworkXError:
-            pass
 
     def _generate_visualizations(self):
         """Generate advanced visualizations of the dependency graph"""
@@ -416,9 +402,6 @@ class EnhancedAnalyzer:
                 sections.extend(f"  - {dep}" for dep in sorted(node.dependencies))
                 sections.append("  ```")
             if node.type_errors:
-                sections.extend(("- **Type Errors:**", "  ```"))
-                sections.extend(f"  - {error}" for error in node.type_errors)
-                sections
                 sections.extend(("- **Type Errors:**", "  ```"))
                 sections.extend(f"  - {error}" for error in node.type_errors)
                 sections.extend(

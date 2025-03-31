@@ -2,23 +2,38 @@
 
 from collections import defaultdict
 from pathlib import Path
-from typing import Dict, List, Optional, Set
+from typing import DefaultDict, Dict, List, Optional, Set
 
-import black
-import isort
+import toml
 import libcst as cst
 import mypy.api
 import networkx as nx
 import numpy as np
-from libcst.metadata import CodeRange
-from libcst.metadata.scopes import ModuleScope
-from libcst.metadata.visitors import BaseVisitor
 from radon.complexity import cc_visit
 from radon.metrics import mi_visit
 from rich.console import Console
 from rich.table import Table
 
+# Local imports
+from .analyzer import EnhancedAnalyzer, AnalysisMetrics
+from .cyclomatic_complexity_analyzer import CyclomaticComplexityAnalyzer
+
 console = Console()
+
+
+class ImportCollectorVisitor(cst.CSTVisitor):
+    """Visitor to collect imports using libcst"""
+
+    def __init__(self):
+        self.imports: Set[str] = set()
+
+    def visit_Import(self, node: cst.Import):
+        for name in node.names:
+            self.imports.add(name.name.value)
+
+    def visit_ImportFrom(self, node: cst.ImportFrom):
+        if node.module:
+            self.imports.add(node.module.value)
 
 
 class ImportNode:

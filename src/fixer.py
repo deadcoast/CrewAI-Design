@@ -24,15 +24,16 @@ import isort
 import libcst as cst
 import networkx as nx
 import numpy as np
-import rope.base.project
-from analyzers.import_analyzer import ImportAnalyzer
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import PythonLexer
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn
+from rope.base.project import Project
 from sklearn.cluster import SpectralClustering
 from sklearn.utils.linear_assignment_ import linear_sum_assignment
+
+from analyzers.import_analyzer import ImportAnalyzer
 
 # Import transformers from local module if available, otherwise use the ones defined here
 try:
@@ -83,7 +84,7 @@ class SmartFixer:
         self.backup = backup
         self.config = self._load_config(config_path) if config_path else {}
         self.fixes: List[FixOperation] = []
-        self.rope_project = rope.base.project.Project(str(self.root))
+        self.rope_project = Project(str(self.root))
 
         # Initialize fix strategies with weighted priorities
         self.strategies = self._initialize_strategies()
@@ -93,6 +94,20 @@ class SmartFixer:
 
         # Performance optimization
         self.max_workers = self.config.get("max_workers", 4)
+
+    def _load_config(self, config_path: Optional[Path]) -> Dict[str, Any]:
+        """Load configuration from TOML file"""
+        if not config_path or not config_path.exists():
+            return {}
+
+        try:
+            import toml
+
+            with open(config_path, "r") as f:
+                return toml.load(f)
+        except Exception as e:
+            print(f"Error loading configuration: {e}")
+            return {}
 
     def fix_project(self) -> Dict[str, Any]:
         """Execute comprehensive project fixes"""
@@ -296,7 +311,7 @@ class SmartFixer:
             if self.config.get("enable_type_checking", True):
                 import mypy.api
 
-                result = mypy.api.run([fix.file_path])
+                result = mypy.api.run([str(fix.file_path)])
                 if result[0]:  # mypy errors
                     return fix, False
 
@@ -348,7 +363,7 @@ class SmartFixer:
             except Exception as e:
                 console.print(f"[red]Error formatting {fix.file_path}: {str(e)}")
 
-    def _generate_fix_report(self) -> Dict[str, any]:
+    def _generate_fix_report(self) -> Dict[str, Any]:
         """Generate comprehensive fix report"""
         report = {
             "total_fixes": len(self.fixes),
@@ -451,6 +466,7 @@ class SmartFixer:
                     impact_score=0.7,
                     dependencies_affected=transformer.affected_imports,
                 )
+            return None
 
         except Exception as e:
             console.print(f"[red]Error fixing imports in {file_path}: {str(e)}")

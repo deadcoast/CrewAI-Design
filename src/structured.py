@@ -36,8 +36,6 @@ from rich.panel import Panel
 from rich.syntax import Syntax
 from rich.table import Table
 
-# Remove duplicate Literal import
-
 # Setup rich console
 console = Console()
 
