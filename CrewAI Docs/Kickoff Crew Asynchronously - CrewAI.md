@@ -9,13 +9,14 @@ description: "Kickoff a Crew Asynchronously"
 tags:
   - "clippings"
 ---
+
 How to Guides
 
 # Kickoff Crew Asynchronously
 
 Kickoff a Crew Asynchronously
 
-## 
+##
 
 [​
 
@@ -25,7 +26,7 @@ Introduction
 
 CrewAI provides the ability to kickoff a crew asynchronously, allowing you to start the crew execution in a non-blocking manner. This feature is particularly useful when you want to run multiple crews concurrently or when you need to perform other tasks while the crew is executing.
 
-## 
+##
 
 [​
 
@@ -35,7 +36,7 @@ Asynchronous Crew Execution
 
 To kickoff a crew asynchronously, use the `kickoff_async()` method. This method initiates the crew execution in a separate thread, allowing the main thread to continue executing other tasks.
 
-### 
+###
 
 [​
 
@@ -51,7 +52,7 @@ Copy
 def kickoff_async(self, inputs: dict) -> CrewOutput:
 ```
 
-### 
+###
 
 [​
 
@@ -61,7 +62,7 @@ Parameters
 
 - `inputs` (dict): A dictionary containing the input data required for the tasks.
 
-### 
+###
 
 [​
 
@@ -71,7 +72,7 @@ Returns
 
 - `CrewOutput`: An object representing the result of the crew execution.
 
-## 
+##
 
 [​
 
@@ -83,7 +84,7 @@ Potential Use Cases
 - **Concurrent Market Research Tasks**: Launch multiple crews asynchronously to conduct market research in parallel. One crew might analyze industry trends, while another examines competitor strategies, and yet another evaluates consumer sentiment. Each crew independently completes its task, enabling faster and more comprehensive insights.
 - **Independent Travel Planning Modules**: Execute separate crews to independently plan different aspects of a trip. One crew might handle flight options, another handles accommodation, and a third plans activities. Each crew works asynchronously, allowing various components of the trip to be planned simultaneously and independently for faster results.
 
-## 
+##
 
 [​
 
@@ -130,7 +131,7 @@ async def async_crew_execution():
 asyncio.run(async_crew_execution())
 ```
 
-## 
+##
 
 [​
 

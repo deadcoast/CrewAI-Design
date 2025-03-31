@@ -10,36 +10,36 @@ Features:
 - Interactive fix review
 - Undo/redo capability
 """
+
+import difflib
+import tempfile
+from contextlib import contextmanager
+from dataclasses import dataclass, field
+from enum import Enum
 from pathlib import Path
-from typing import Optional, List, Dict, Any
-from dataclasses import field
+from typing import Any, Dict, List, Optional
+
+import git
+import networkx as nx
+import questionary
+import toml
 import typer
+import uvicorn
+from fastapi import FastAPI
+from pydantic import BaseModel
+from rich import click
 from rich.console import Console
-from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn
+from rich.layout import Layout
+from rich.panel import Panel
+from rich.progress import BarColumn, Progress, SpinnerColumn, TextColumn
 from rich.prompt import Confirm
 from rich.syntax import Syntax
 from rich.table import Table
-from rich.panel import Panel
-from rich.layout import Layout
-from rich import click
-import questionary
-import git
-import difflib
-from dataclasses import dataclass
-from enum import Enum
-import toml
-from pydantic import BaseModel
-import networkx as nx
-import uvicorn
-from fastapi import FastAPI
-from contextlib import contextmanager
-import tempfile
 
 # Import our enhanced modules
 from src.analyzer import EnhancedAnalyzer
-from src.fixer import SmartFixer
 from src.cli import StructuredLogger
-
+from src.fixer import SmartFixer
 
 # Initialize rich console
 console = Console()
@@ -47,15 +47,19 @@ console = Console()
 # Create FastAPI app for dashboard
 app = FastAPI()
 
+
 class FixMode(str, Enum):
     """Fix application modes"""
+
     INTERACTIVE = "interactive"
     AUTOMATIC = "automatic"
     DRY_RUN = "dry-run"
     SAFE = "safe"
 
+
 class ProjectConfig(BaseModel):
     """Project configuration"""
+
     project_root: Path
     exclude_patterns: List[str] = ["venv", "*.pyc", "__pycache__"]
     max_workers: int = 4
@@ -63,31 +67,28 @@ class ProjectConfig(BaseModel):
     fix_mode: FixMode = FixMode.INTERACTIVE
     git_integration: bool = True
 
+
 @dataclass
 class FixSession:
     """Track fix session state"""
+
     config: ProjectConfig
     changes: List[Dict[str, Any]] = field(default_factory=list)
     undo_stack: List[Dict[str, Any]] = field(default_factory=list)
     redo_stack: List[Dict[str, Any]] = field(default_factory=list)
 
+
 class CLI:
     """Enhanced CLI with interactive features"""
-    
+
     def __init__(self):
-        self.app = typer.Typer(
-            help="Advanced Python Import Fixer",
-            add_completion=True
-        )
+        self.app = typer.Typer(help="Advanced Python Import Fixer", add_completion=True)
         self.session: Optional[FixSession] = None
-        self.logger = StructuredLogger(
-            name="import_fixer_cli",
-            log_dir=Path("logs")
-        )
-        
+        self.logger = StructuredLogger(name="import_fixer_cli", log_dir=Path("logs"))
+
         # Register commands
         self._register_commands()
-        
+
         # Initialize components
         self.analyzer = None
         self.fixer = None
@@ -104,29 +105,28 @@ class CLI:
 
     async def fix(
         self,
-        project_path: Path = typer.Argument(
+        project_path: Path,
+        mode: FixMode = FixMode.INTERACTIVE,
+        config_file: Optional[Path] = None,
+    ):
+        # Process typer arguments
+        project_path = typer.Argument(
             ...,
             help="Path to Python project",
             exists=True,
             file_okay=False,
             dir_okay=True,
-            resolve_path=True
-        ),
-        mode: FixMode = typer.Option(
-            FixMode.INTERACTIVE,
-            help="Fix application mode"
-        ),
-        config_file: Optional[Path] = typer.Option(
-            None,
-            help="Path to config file"
-        )
-    ):
+            resolve_path=True,
+        )(project_path)
+        mode = typer.Option(FixMode.INTERACTIVE, help="Fix application mode")(mode)
+        config_file = typer.Option(None, help="Path to config file")(config_file)
         """Fix Python imports in project"""
         try:
             # Load or create config
-            config = self._load_config(config_file) if config_file else ProjectConfig(
-                project_root=project_path,
-                fix_mode=mode
+            config = (
+                self._load_config(config_file)
+                if config_file
+                else ProjectConfig(project_root=project_path, fix_mode=mode)
             )
 
             # Initialize session
@@ -156,13 +156,9 @@ class CLI:
             console.print(f"[red]Error: {str(e)}")
             raise typer.Exit(1) from e
 
-    async def analyze(
-        self,
-        project_path: Path = typer.Argument(
-            ...,
-            help="Path to Python project"
-        )
-    ):
+    async def analyze(self, project_path: Path):
+        # Process typer argument
+        project_path = typer.Argument(..., help="Path to Python project")(project_path)
         """Analyze Python project imports"""
         try:
             # Initialize analyzer
@@ -174,7 +170,7 @@ class CLI:
                 TextColumn("[progress.description]{task.description}"),
                 BarColumn(),
                 TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
-                console=console
+                console=console,
             ) as progress:
                 task = progress.add_task("Analyzing project...", total=100)
 
@@ -191,12 +187,12 @@ class CLI:
 
     async def dashboard(
         self,
-        project_path: Path = typer.Argument(
-            ...,
-            help="Path to Python project"
-        ),
-        port: int = typer.Option(8000, help="Dashboard port")
+        project_path: Path,
+        port: int = 8000,
     ):
+        # Process typer arguments
+        project_path = typer.Argument(..., help="Path to Python project")(project_path)
+        port = typer.Option(8000, help="Dashboard port")(port)
         """Launch interactive dashboard"""
         try:
             # Initialize dashboard
@@ -204,10 +200,7 @@ class CLI:
 
             # Start server
             config = uvicorn.Config(
-                app=app,
-                host="0.0.0.0",
-                port=port,
-                log_level="info"
+                app=app, host="127.0.0.1", port=port, log_level="info"
             )
             server = uvicorn.Server(config)
             await server.serve()
@@ -216,13 +209,9 @@ class CLI:
             console.print(f"[red]Error: {str(e)}")
             raise typer.Exit(1) from e
 
-    async def init(
-        self,
-        project_path: Path = typer.Argument(
-            ...,
-            help="Path to Python project"
-        )
-    ):
+    async def init(self, project_path: Path):
+        # Process typer argument
+        project_path = typer.Argument(..., help="Path to Python project")(project_path)
         """Initialize project configuration"""
         try:
             # Get user input
@@ -244,15 +233,15 @@ class CLI:
         if not self.session or not self.session.changes:
             console.print("[yellow]No changes to undo")
             return
-            
+
         # Pop last change
         change = self.session.changes.pop()
         self.session.undo_stack.append(change)
-        
+
         # Restore file
         with open(change["file"], "w") as f:
             f.write(change["original"])
-            
+
         console.print(f"[green]Undid changes to {change['file']}")
 
     async def status(self):
@@ -260,16 +249,16 @@ class CLI:
         if not self.session:
             console.print("[yellow]No active fix session")
             return
-            
+
         # Create status table
         table = Table(title="Fix Session Status")
         table.add_column("Metric")
         table.add_column("Value")
-        
+
         table.add_row("Files Changed", str(len(self.session.changes)))
         table.add_row("Changes Available to Undo", str(len(self.session.undo_stack)))
         table.add_row("Mode", self.session.config.fix_mode)
-        
+
         console.print(table)
 
     async def _interactive_config(self, project_path: Path) -> ProjectConfig:
@@ -279,34 +268,34 @@ class CLI:
                 "type": "checkbox",
                 "name": "exclude_patterns",
                 "message": "Select patterns to exclude:",
-                "choices": ["venv", "*.pyc", "__pycache__", "*.egg-info"]
+                "choices": ["venv", "*.pyc", "__pycache__", "*.egg-info"],
             },
             {
                 "type": "number",
                 "name": "max_workers",
                 "message": "Number of worker threads:",
-                "default": 4
+                "default": 4,
             },
             {
                 "type": "confirm",
                 "name": "backup",
                 "message": "Create backups before fixing?",
-                "default": True
+                "default": True,
             },
             {
                 "type": "select",
                 "name": "fix_mode",
                 "message": "Select fix mode:",
-                "choices": [m.value for m in FixMode]
+                "choices": [m.value for m in FixMode],
             },
             {
                 "type": "confirm",
                 "name": "git_integration",
                 "message": "Enable Git integration?",
-                "default": True
-            }
+                "default": True,
+            },
         ]
-        
+
         answers = await questionary.prompt(questions)
         return ProjectConfig(project_root=project_path, **answers)
 
@@ -316,40 +305,40 @@ class CLI:
         if not self.session.config.git_integration:
             yield
             return
-            
+
         try:
             repo = git.Repo(self.session.config.project_root)
-            
+
             # Check for clean state
             if repo.is_dirty() and not Confirm.ask(
-                                "[yellow]Git repository has uncommitted changes. Continue?"
-                            ):
+                "[yellow]Git repository has uncommitted changes. Continue?"
+            ):
                 raise typer.Exit(1)
-            
+
             # Create temporary branch
             current = repo.active_branch
             temp_branch = repo.create_head("fix-imports-temp")
             temp_branch.checkout()
-            
+
             try:
                 yield
-                
+
                 # Commit changes
                 if repo.is_dirty():
                     repo.index.add("*")
                     repo.index.commit("Applied import fixes")
-                    
+
                     if Confirm.ask("Keep changes?"):
                         current.checkout()
                         repo.delete_head(temp_branch)
                     else:
                         temp_branch.checkout()
                         repo.delete_head(current)
-                        
+
             finally:
                 if temp_branch.is_valid():
                     temp_branch.delete()
-                    
+
         except git.InvalidGitRepositoryError:
             yield
 
@@ -357,37 +346,30 @@ class CLI:
         """Show analysis results"""
         # Create layout
         layout = Layout()
-        
-        layout.split_column(
-            Layout(name="summary"),
-            Layout(name="details", ratio=2)
-        )
-        
+
+        layout.split_column(Layout(name="summary"), Layout(name="details", ratio=2))
+
         # Summary section
         summary = Table(title="Analysis Summary")
         summary.add_column("Metric")
         summary.add_column("Value")
-        
+
         for key, value in result["summary"].items():
             summary.add_row(key.replace("_", " ").title(), str(value))
-            
+
         layout["summary"].update(Panel(summary))
-        
+
         # Details section
         details = Table(title="Import Issues")
         details.add_column("File")
         details.add_column("Issue")
         details.add_column("Suggestion")
-        
+
         for issue in result["issues"]:
-            details.add_row(
-                str(issue["file"]),
-                issue["type"],
-                issue["suggestion"]
-            )
-            
+            details.add_row(str(issue["file"]), issue["type"], issue["suggestion"])
+
         layout["details"].update(Panel(details))
-        
+
         # Show layout
         console.print(layout)
 
@@ -397,36 +379,24 @@ class CLI:
             # Show issue
             console.print(f"\n[bold]Issue in {issue['file']}:")
             console.print(issue["description"])
-            
+
             # Show diff
             original = issue["original"]
             fixed = issue["suggestion"]
-            
+
             diff = difflib.unified_diff(
-                original.splitlines(),
-                fixed.splitlines(),
-                lineterm=""
+                original.splitlines(), fixed.splitlines(), lineterm=""
             )
-            
+
             console.print("\n[bold]Proposed fix:")
-            console.print(Syntax(
-                "\n".join(diff),
-                "diff",
-                theme="monokai"
-            ))
-            
+            console.print(Syntax("\n".join(diff), "diff", theme="monokai"))
+
             # Get user choice
             choice = questionary.select(
                 "What would you like to do?",
-                choices=[
-                    "Apply fix",
-                    "Skip",
-                    "Edit fix",
-                    "Show context",
-                    "Quit"
-                ]
+                choices=["Apply fix", "Skip", "Edit fix", "Show context", "Quit"],
             ).ask()
-            
+
             if choice == "Apply fix":
                 await self._apply_fix(issue)
             elif choice == "Edit fix":
@@ -442,10 +412,12 @@ class CLI:
             SpinnerColumn(),
             TextColumn("[progress.description]{task.description}"),
             BarColumn(),
-            TextColumn("[progress.percentage]{task.percentage:>3.0f}%")
+            TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
         ) as progress:
-            task = progress.add_task("Applying fixes...", total=len(analysis_result["issues"]))
-            
+            task = progress.add_task(
+                "Applying fixes...", total=len(analysis_result["issues"])
+            )
+
             for issue in analysis_result["issues"]:
                 await self._apply_fix(issue)
                 progress.advance(task)
@@ -463,11 +435,13 @@ class CLI:
         file_path.write_text(issue["suggestion"])
 
         # Record change
-        self.session.changes.append({
-            "file": str(file_path),
-            "original": issue["original"],
-            "fixed": issue["suggestion"]
-        })
+        self.session.changes.append(
+            {
+                "file": str(file_path),
+                "original": issue["original"],
+                "fixed": issue["suggestion"],
+            }
+        )
 
     async def _edit_fix(self, issue: Dict[str, Any]):
         """Edit a proposed fix"""
@@ -475,10 +449,10 @@ class CLI:
         with tempfile.NamedTemporaryFile(mode="w", suffix=".py") as temp:
             temp.write(issue["suggestion"])
             temp.flush()
-            
+
             # Open in editor
             edited = click.edit(filename=temp.name)
-            
+
             if edited is not None:
                 issue["suggestion"] = edited
 
@@ -489,12 +463,12 @@ class CLI:
         table = Table(title=f"Context for {issue['file']}")
         table.add_column("Property")
         table.add_column("Value")
-        
+
         for key, value in context.items():
             table.add_row(key.replace("_", " ").title(), str(value))
-            
+
         console.print(table)
-        
+
         # Show dependency graph if available
         if "dependencies" in context:
             self._show_dependency_graph(context["dependencies"])
@@ -502,10 +476,10 @@ class CLI:
     def _show_dependency_graph(self, dependencies: Dict[str, List[str]]):
         """Visualize dependency graph"""
         G = nx.DiGraph(dependencies)
-        
+
         # Create layout
-        layout = nx.spring_layout(G)
-        
+        nx.spring_layout(G)
+
         # Create ASCII visualization
         console.print("\nDependency Graph:")
         for node in G.nodes():
@@ -522,12 +496,11 @@ class CLI:
         """Initialize analysis components"""
         self.analyzer = EnhancedAnalyzer(
             self.session.config.project_root,
-            max_workers=self.session.config.max_workers
+            max_workers=self.session.config.max_workers,
         )
-        
+
         self.fixer = SmartFixer(
-            self.session.config.project_root,
-            backup=self.session.config.backup
+            self.session.config.project_root, backup=self.session.config.backup
         )
 
     def _load_config(self, config_file: Path) -> ProjectConfig:
@@ -540,16 +513,17 @@ class CLI:
             console.print(f"[red]Error loading config: {str(e)}")
             raise typer.Exit(1) from e
 
+
 class Dashboard:
     """Interactive web dashboard"""
-    
+
     def __init__(self, project_path: Path):
         self.project_path = project_path
         self.analyzer = EnhancedAnalyzer(project_path)
-        
+
         # Register routes
         self._setup_routes()
-        
+
     def _setup_routes(self):
         @app.get("/")
         async def dashboard():
@@ -557,15 +531,15 @@ class Dashboard:
             return {
                 "project": str(self.project_path),
                 "analysis": await self._get_analysis_data(),
-                "fixes": await self._get_fix_history()
+                "fixes": await self._get_fix_history(),
             }
-        
+
         @app.get("/analyze")
         async def analyze():
             """Run new analysis"""
             result = await self.analyzer.analyze_project()
             return {"status": "success", "result": result}
-            
+
         @app.post("/fix")
         async def fix(file_path: str, fix_id: str):
             """Apply specific fix"""
@@ -582,7 +556,7 @@ class Dashboard:
             return {
                 "summary": result["summary"],
                 "issues": result["issues"],
-                "metrics": result["metrics"]
+                "metrics": result["metrics"],
             }
         except Exception as e:
             return {"error": str(e)}

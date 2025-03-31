@@ -9,13 +9,14 @@ description: "Kickoff Crew for Each Item in a List"
 tags:
   - "clippings"
 ---
+
 How to Guides
 
 # Kickoff Crew for Each
 
 Kickoff Crew for Each Item in a List
 
-## 
+##
 
 [​
 
@@ -25,7 +26,7 @@ Introduction
 
 CrewAI provides the ability to kickoff a crew for each item in a list, allowing you to execute the crew for each item in the list. This feature is particularly useful when you need to perform the same set of tasks for multiple items.
 
-## 
+##
 
 [​
 

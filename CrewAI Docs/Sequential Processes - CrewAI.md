@@ -9,13 +9,14 @@ description: "A comprehensive guide to utilizing the sequential processes for ta
 tags:
   - "clippings"
 ---
+
 How to Guides
 
 # Sequential Processes
 
 A comprehensive guide to utilizing the sequential processes for task execution in CrewAI projects.
 
-## 
+##
 
 [​
 
@@ -25,7 +26,7 @@ Introduction
 
 CrewAI offers a flexible framework for executing tasks in a structured manner, supporting both sequential and hierarchical processes. This guide outlines how to effectively implement these processes to ensure efficient task execution and project completion.
 
-## 
+##
 
 [​
 
@@ -35,7 +36,7 @@ Sequential Process Overview
 
 The sequential process ensures tasks are executed one after the other, following a linear progression. This approach is ideal for projects requiring tasks to be completed in a specific order.
 
-### 
+###
 
 [​
 
@@ -47,7 +48,7 @@ Key Features
 - **Simplicity**: Best suited for projects with clear, step-by-step tasks.
 - **Easy Monitoring**: Facilitates easy tracking of task completion and project progress.
 
-## 
+##
 
 [​
 
@@ -83,18 +84,18 @@ writer = Agent(
 
 # Define your tasks
 research_task = Task(
-  description='Gather relevant data...', 
-  agent=researcher, 
+  description='Gather relevant data...',
+  agent=researcher,
   expected_output='Raw Data'
 )
 analysis_task = Task(
-  description='Analyze the data...', 
-  agent=analyst, 
+  description='Analyze the data...',
+  agent=analyst,
   expected_output='Data Insights'
 )
 writing_task = Task(
-  description='Compose the report...', 
-  agent=writer, 
+  description='Compose the report...',
+  agent=writer,
   expected_output='Final Report'
 )
 
@@ -113,7 +114,7 @@ task_output: TaskOutput = result.tasks[0].output
 crew_output: CrewOutput = result.output
 ```
 
-### 
+###
 
 [​
 
@@ -123,7 +124,7 @@ Note:
 
 Each task in a sequential process **must** have an agent assigned. Ensure that every `Task` includes an `agent` parameter.
 
-### 
+###
 
 [​
 
@@ -135,7 +136,7 @@ Workflow in Action
 2. **Subsequent Tasks**: Agents pick up their tasks based on the process type, with outcomes of preceding tasks or directives guiding their execution.
 3. **Completion**: The process concludes once the final task is executed, leading to project completion.
 
-## 
+##
 
 [​
 
@@ -143,7 +144,7 @@ Workflow in Action
 
 Advanced Features
 
-### 
+###
 
 [​
 
@@ -153,7 +154,7 @@ Task Delegation
 
 In sequential processes, if an agent has `allow_delegation` set to `True`, they can delegate tasks to other agents in the crew. This feature is automatically set up when there are multiple agents in the crew.
 
-### 
+###
 
 [​
 
@@ -163,7 +164,7 @@ Asynchronous Execution
 
 Tasks can be executed asynchronously, allowing for parallel processing when appropriate. To create an asynchronous task, set `async_execution=True` when defining the task.
 
-### 
+###
 
 [​
 
@@ -176,7 +177,7 @@ CrewAI supports both memory and caching features:
 - **Memory**: Enable by setting `memory=True` when creating the Crew. This allows agents to retain information across tasks.
 - **Caching**: By default, caching is enabled. Set `cache=False` to disable it.
 
-### 
+###
 
 [​
 
@@ -189,7 +190,7 @@ You can set callbacks at both the task and step level:
 - `task_callback`: Executed after each task completion.
 - `step_callback`: Executed after each step in an agent’s execution.
 
-### 
+###
 
 [​
 
@@ -199,7 +200,7 @@ Usage Metrics
 
 CrewAI tracks token usage across all tasks and agents. You can access these metrics after execution.
 
-## 
+##
 
 [​
 

@@ -9,13 +9,14 @@ description: "Quickly start monitoring your Agents in just a single line of code
 tags:
   - "clippings"
 ---
+
 How to Guides
 
 # Agent Monitoring with OpenLIT
 
 Quickly start monitoring your Agents in just a single line of code with OpenTelemetry.
 
-# 
+#
 
 [​
 
@@ -31,7 +32,7 @@ It provides OpenTelemetry-native tracing and metrics to track important paramete
 
 OpenLIT Dashboard
 
-### 
+###
 
 [​
 
@@ -49,7 +50,7 @@ Features
 - **Prompt Management**: Manage and version Agent prompts using PromptHub for consistent and easy access across Agents.
 - **Model Playground** Test and compare different models for your CrewAI agents before deployment.
 
-## 
+##
 
 [​
 
@@ -99,8 +100,8 @@ Initialize OpenLIT in Your Application
 
 Add the following two lines to your application code:
 
-- 
-- 
+-
+-
 
 Copy
 

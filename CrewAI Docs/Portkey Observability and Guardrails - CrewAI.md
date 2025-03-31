@@ -9,6 +9,7 @@ description: "How to use Portkey with CrewAI"
 tags:
   - "clippings"
 ---
+
 How to Guides
 
 # Portkey Observability and Guardrails
@@ -26,7 +27,7 @@ Portkey adds 4 core production capabilities to any CrewAI agent:
 3. Full-stack tracing & cost, performance analytics
 4. Real-time guardrails to enforce behavior
 
-## 
+##
 
 [​
 
@@ -104,7 +105,7 @@ result = crew.kickoff()
 print(result)
 ```
 
-## 
+##
 
 [​
 
@@ -112,17 +113,17 @@ print(result)
 
 Key Features
 
-| Feature | Description |
-| --- | --- |
-| 🌐 Multi-LLM Support | Access OpenAI, Anthropic, Gemini, Azure, and 250+ providers through a unified interface |
-| 🛡️ Production Reliability | Implement retries, timeouts, load balancing, and fallbacks |
-| 📊 Advanced Observability | Track 40+ metrics including costs, tokens, latency, and custom metadata |
-| 🔍 Comprehensive Logging | Debug with detailed execution traces and function call logs |
-| 🚧 Security Controls | Set budget limits and implement role-based access control |
-| 🔄 Performance Analytics | Capture and analyze feedback for continuous improvement |
-| 💾 Intelligent Caching | Reduce costs and latency with semantic or simple caching |
+| Feature                   | Description                                                                             |
+| ------------------------- | --------------------------------------------------------------------------------------- |
+| 🌐 Multi-LLM Support      | Access OpenAI, Anthropic, Gemini, Azure, and 250+ providers through a unified interface |
+| 🛡️ Production Reliability | Implement retries, timeouts, load balancing, and fallbacks                              |
+| 📊 Advanced Observability | Track 40+ metrics including costs, tokens, latency, and custom metadata                 |
+| 🔍 Comprehensive Logging  | Debug with detailed execution traces and function call logs                             |
+| 🚧 Security Controls      | Set budget limits and implement role-based access control                               |
+| 🔄 Performance Analytics  | Capture and analyze feedback for continuous improvement                                 |
+| 💾 Intelligent Caching    | Reduce costs and latency with semantic or simple caching                                |
 
-## 
+##
 
 [​
 
@@ -134,7 +135,7 @@ All features mentioned below are through Portkey’s Config system. Portkey’s 
 
 ![](https://raw.githubusercontent.com/Portkey-AI/docs-core/refs/heads/main/images/libraries/libraries-3.avif)
 
-### 
+###
 
 [​
 
@@ -174,7 +175,7 @@ azure_llm = LLM(
 )
 ```
 
-### 
+###
 
 [​
 
@@ -197,7 +198,7 @@ config = {
 }
 ```
 
-### 
+###
 
 [​
 
@@ -215,7 +216,7 @@ Portkey provides comprehensive reliability features:
 
 [Learn more about Reliability Features](https://portkey.ai/docs/product/ai-gateway/)
 
-### 
+###
 
 [​
 
@@ -233,7 +234,7 @@ Agent runs are complex. Portkey automatically logs **40+ comprehensive metrics**
 
 ![Portkey Dashboard](https://github.com/siddharthsambharia-portkey/Portkey-Product-Images/blob/main/Portkey-Dashboard.png?raw=true)
 
-### 
+###
 
 [​
 
@@ -245,7 +246,7 @@ Logs are essential for understanding agent behavior, diagnosing issues, and impr
 
 Access a dedicated section to view records of agent executions, including parameters, outcomes, function calls, and errors. Filter logs based on multiple parameters such as trace ID, model, tokens used, and metadata.
 
-### 
+###
 
 [​
 
@@ -260,7 +261,7 @@ Access a dedicated section to view records of agent executions, including parame
 
 For detailed information on creating and managing Configs, visit the [Portkey documentation](https://docs.portkey.ai/product/ai-gateway/configs).
 
-## 
+##
 
 [​
 

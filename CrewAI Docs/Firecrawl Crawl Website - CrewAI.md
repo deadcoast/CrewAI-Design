@@ -9,13 +9,14 @@ description: "The `FirecrawlCrawlWebsiteTool` is designed to crawl and convert w
 tags:
   - "clippings"
 ---
+
 Tools
 
 # Firecrawl Crawl Website
 
 The `FirecrawlCrawlWebsiteTool` is designed to crawl and convert websites into clean markdown or structured data.
 
-# 
+#
 
 [​
 
@@ -23,7 +24,7 @@ The `FirecrawlCrawlWebsiteTool` is designed to crawl and convert websites into c
 
 `FirecrawlCrawlWebsiteTool`
 
-## 
+##
 
 [​
 
@@ -33,7 +34,7 @@ Description
 
 [Firecrawl](https://firecrawl.dev/) is a platform for crawling and convert any website into clean markdown or structured data.
 
-## 
+##
 
 [​
 
@@ -50,7 +51,7 @@ Copy
 pip install firecrawl-py 'crewai[tools]'
 ```
 
-## 
+##
 
 [​
 
@@ -70,7 +71,7 @@ from crewai_tools import FirecrawlCrawlWebsiteTool
 tool = FirecrawlCrawlWebsiteTool(url='firecrawl.dev')
 ```
 
-## 
+##
 
 [​
 

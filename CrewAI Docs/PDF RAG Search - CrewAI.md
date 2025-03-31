@@ -9,13 +9,14 @@ description: "The `PDFSearchTool` is designed to search PDF files and return the
 tags:
   - "clippings"
 ---
+
 Tools
 
 # PDF RAG Search
 
 The `PDFSearchTool` is designed to search PDF files and return the most relevant results.
 
-# 
+#
 
 [​
 
@@ -25,7 +26,7 @@ The `PDFSearchTool` is designed to search PDF files and return the most relevant
 
 We are still working on improving tools, so there might be unexpected behavior or changes in the future.
 
-## 
+##
 
 [​
 
@@ -35,7 +36,7 @@ Description
 
 The PDFSearchTool is a RAG tool designed for semantic searches within PDF content. It allows for inputting a search query and a PDF document, leveraging advanced search techniques to find relevant content efficiently. This capability makes it especially useful for extracting specific information from large PDF files quickly.
 
-## 
+##
 
 [​
 
@@ -43,7 +44,7 @@ The PDFSearchTool is a RAG tool designed for semantic searches within PDF conten
 
 Installation
 
-To get started with the PDFSearchTool, first, ensure the crewai\_tools package is installed with the following command:
+To get started with the PDFSearchTool, first, ensure the crewai_tools package is installed with the following command:
 
 Copy
 
@@ -51,7 +52,7 @@ Copy
 pip install 'crewai[tools]'
 ```
 
-## 
+##
 
 [​
 
@@ -77,7 +78,7 @@ tool = PDFSearchTool()
 tool = PDFSearchTool(pdf='path/to/your/document.pdf')
 ```
 
-## 
+##
 
 [​
 
@@ -87,7 +88,7 @@ Arguments
 
 - `pdf`: **Optional** The PDF path for the search. Can be provided at initialization or within the `run` method’s arguments. If provided at initialization, the tool confines its search to the specified document.
 
-## 
+##
 
 [​
 

@@ -9,6 +9,7 @@ description: "Exploring the dynamics of agent collaboration within the CrewAI fr
 tags:
   - "clippings"
 ---
+
 Core Concepts
 
 # Collaboration
@@ -27,24 +28,24 @@ Collaboration in CrewAI is fundamental, enabling agents to combine their skills,
 
 The `Crew` class has been enriched with several attributes to support advanced functionalities:
 
-| Feature | Description |
-| --- | --- |
+| Feature                                                               | Description                                                                                                                                                                                              |
+| --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Language Model Management** (`manager_llm`, `function_calling_llm`) | Manages language models for executing tasks and tools. `manager_llm` is required for hierarchical processes, while `function_calling_llm` is optional with a default value for streamlined interactions. |
-| **Custom Manager Agent** (`manager_agent`) | Specifies a custom agent as the manager, replacing the default CrewAI manager. |
-| **Process Flow** (`process`) | Defines execution logic (e.g., sequential, hierarchical) for task distribution. |
-| **Verbose Logging** (`verbose`) | Provides detailed logging for monitoring and debugging. Accepts integer and boolean values to control verbosity level. |
-| **Rate Limiting** (`max_rpm`) | Limits requests per minute to optimize resource usage. Setting guidelines depend on task complexity and load. |
-| **Internationalization / Customization** (`language`, `prompt_file`) | Supports prompt customization for global usability. [Example of file](https://github.com/joaomdmoura/crewAI/blob/main/src/crewai/translations/en.json) |
-| **Execution and Output Handling** (`full_output`) | Controls output granularity, distinguishing between full and final outputs. |
-| **Callback and Telemetry** (`step_callback`, `task_callback`) | Enables step-wise and task-level execution monitoring and telemetry for performance analytics. |
-| **Crew Sharing** (`share_crew`) | Allows sharing crew data with CrewAI for model improvement. Privacy implications and benefits should be considered. |
-| **Usage Metrics** (`usage_metrics`) | Logs all LLM usage metrics during task execution for performance insights. |
-| **Memory Usage** (`memory`) | Enables memory for storing execution history, aiding in agent learning and task efficiency. |
-| **Embedder Configuration** (`embedder`) | Configures the embedder for language understanding and generation, with support for provider customization. |
-| **Cache Management** (`cache`) | Specifies whether to cache tool execution results, enhancing performance. |
-| **Output Logging** (`output_log_file`) | Defines the file path for logging crew execution output. |
-| **Planning Mode** (`planning`) | Enables action planning before task execution. Set `planning=True` to activate. |
-| **Replay Feature** (`replay`) | Provides CLI for listing tasks from the last run and replaying from specific tasks, aiding in task management and troubleshooting. |
+| **Custom Manager Agent** (`manager_agent`)                            | Specifies a custom agent as the manager, replacing the default CrewAI manager.                                                                                                                           |
+| **Process Flow** (`process`)                                          | Defines execution logic (e.g., sequential, hierarchical) for task distribution.                                                                                                                          |
+| **Verbose Logging** (`verbose`)                                       | Provides detailed logging for monitoring and debugging. Accepts integer and boolean values to control verbosity level.                                                                                   |
+| **Rate Limiting** (`max_rpm`)                                         | Limits requests per minute to optimize resource usage. Setting guidelines depend on task complexity and load.                                                                                            |
+| **Internationalization / Customization** (`language`, `prompt_file`)  | Supports prompt customization for global usability. [Example of file](https://github.com/joaomdmoura/crewAI/blob/main/src/crewai/translations/en.json)                                                   |
+| **Execution and Output Handling** (`full_output`)                     | Controls output granularity, distinguishing between full and final outputs.                                                                                                                              |
+| **Callback and Telemetry** (`step_callback`, `task_callback`)         | Enables step-wise and task-level execution monitoring and telemetry for performance analytics.                                                                                                           |
+| **Crew Sharing** (`share_crew`)                                       | Allows sharing crew data with CrewAI for model improvement. Privacy implications and benefits should be considered.                                                                                      |
+| **Usage Metrics** (`usage_metrics`)                                   | Logs all LLM usage metrics during task execution for performance insights.                                                                                                                               |
+| **Memory Usage** (`memory`)                                           | Enables memory for storing execution history, aiding in agent learning and task efficiency.                                                                                                              |
+| **Embedder Configuration** (`embedder`)                               | Configures the embedder for language understanding and generation, with support for provider customization.                                                                                              |
+| **Cache Management** (`cache`)                                        | Specifies whether to cache tool execution results, enhancing performance.                                                                                                                                |
+| **Output Logging** (`output_log_file`)                                | Defines the file path for logging crew execution output.                                                                                                                                                 |
+| **Planning Mode** (`planning`)                                        | Enables action planning before task execution. Set `planning=True` to activate.                                                                                                                          |
+| **Replay Feature** (`replay`)                                         | Provides CLI for listing tasks from the last run and replaying from specific tasks, aiding in task management and troubleshooting.                                                                       |
 
 ## [Delegation (Dividing to Conquer)​](https://docs.crewai.com/concepts/#delegation-dividing-to-conquer)
 

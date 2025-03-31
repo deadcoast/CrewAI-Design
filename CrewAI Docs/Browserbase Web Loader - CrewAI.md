@@ -9,13 +9,14 @@ description: "Browserbase is a developer platform to reliably run, manage, and m
 tags:
   - "clippings"
 ---
+
 Tools
 
 # Browserbase Web Loader
 
 Browserbase is a developer platform to reliably run, manage, and monitor headless browsers.
 
-# 
+#
 
 [​
 
@@ -23,7 +24,7 @@ Browserbase is a developer platform to reliably run, manage, and monitor headles
 
 `BrowserbaseLoadTool`
 
-## 
+##
 
 [​
 
@@ -40,7 +41,7 @@ Power your AI data retrievals with:
 - [Session Debugger](https://docs.browserbase.com/features/sessions) to inspect your Browser Session with networks timeline and logs
 - [Live Debug](https://docs.browserbase.com/guides/session-debug-connection/browser-remote-control) to quickly debug your automation
 
-## 
+##
 
 [​
 
@@ -57,7 +58,7 @@ Copy
 pip install browserbase 'crewai[tools]'
 ```
 
-## 
+##
 
 [​
 
@@ -78,7 +79,7 @@ from crewai_tools import BrowserbaseLoadTool
 tool = BrowserbaseLoadTool()
 ```
 
-## 
+##
 
 [​
 
@@ -88,12 +89,12 @@ Arguments
 
 The following parameters can be used to customize the `BrowserbaseLoadTool`’s behavior:
 
-| Argument | Type | Description |
-| --- | --- | --- |
-| **api\_key** | `string` | *Optional*. Browserbase API key. Default is `BROWSERBASE_API_KEY` env variable. |
-| **project\_id** | `string` | *Optional*. Browserbase Project ID. Default is `BROWSERBASE_PROJECT_ID` env variable. |
-| **text\_content** | `bool` | *Optional*. Retrieve only text content. Default is `False`. |
-| **session\_id** | `string` | *Optional*. Provide an existing Session ID. |
-| **proxy** | `bool` | *Optional*. Enable/Disable Proxies. Default is `False`. |
+| Argument         | Type     | Description                                                                           |
+| ---------------- | -------- | ------------------------------------------------------------------------------------- |
+| **api_key**      | `string` | _Optional_. Browserbase API key. Default is `BROWSERBASE_API_KEY` env variable.       |
+| **project_id**   | `string` | _Optional_. Browserbase Project ID. Default is `BROWSERBASE_PROJECT_ID` env variable. |
+| **text_content** | `bool`   | _Optional_. Retrieve only text content. Default is `False`.                           |
+| **session_id**   | `string` | _Optional_. Provide an existing Session ID.                                           |
+| **proxy**        | `bool`   | _Optional_. Enable/Disable Proxies. Default is `False`.                               |
 
 Was this page helpful?

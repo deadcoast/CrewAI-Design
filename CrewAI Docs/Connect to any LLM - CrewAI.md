@@ -9,13 +9,14 @@ description: "Comprehensive guide on integrating CrewAI with various Large Langu
 tags:
   - "clippings"
 ---
+
 How to Guides
 
 # Connect to any LLM
 
 Comprehensive guide on integrating CrewAI with various Large Language Models (LLMs) using LiteLLM, including supported providers and configuration options.
 
-## 
+##
 
 [​
 
@@ -27,7 +28,7 @@ CrewAI uses LiteLLM to connect to a wide variety of Language Models (LLMs). This
 
 By default, CrewAI uses the `gpt-4o-mini` model. This is determined by the `OPENAI_MODEL_NAME` environment variable, which defaults to “gpt-4o-mini” if not set. You can easily configure your agents to use a different model or provider as described in this guide.
 
-## 
+##
 
 [​
 
@@ -58,7 +59,7 @@ LiteLLM supports a wide range of providers, including but not limited to:
 
 For a complete and up-to-date list of supported providers, please refer to the [LiteLLM Providers documentation](https://docs.litellm.ai/docs/providers).
 
-## 
+##
 
 [​
 
@@ -68,8 +69,8 @@ Changing the LLM
 
 To use a different LLM with your CrewAI agents, you have several options:
 
-- 
-- 
+-
+-
 
 Pass the model name as a string when initializing the agent:
 
@@ -95,7 +96,7 @@ claude_agent = Agent(
 )
 ```
 
-## 
+##
 
 [​
 
@@ -105,21 +106,21 @@ Configuration Options
 
 When configuring an LLM for your agent, you have access to a wide range of parameters:
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| **model** | `str` | The name of the model to use (e.g., “gpt-4”, “claude-2”) |
-| **temperature** | `float` | Controls randomness in output (0.0 to 1.0) |
-| **max\_tokens** | `int` | Maximum number of tokens to generate |
-| **top\_p** | `float` | Controls diversity of output (0.0 to 1.0) |
-| **frequency\_penalty** | `float` | Penalizes new tokens based on their frequency in the text so far |
-| **presence\_penalty** | `float` | Penalizes new tokens based on their presence in the text so far |
-| **stop** | `str`, `List[str]` | Sequence(s) to stop generation |
-| **base\_url** | `str` | The base URL for the API endpoint |
-| **api\_key** | `str` | Your API key for authentication |
+| Parameter             | Type               | Description                                                      |
+| --------------------- | ------------------ | ---------------------------------------------------------------- |
+| **model**             | `str`              | The name of the model to use (e.g., “gpt-4”, “claude-2”)         |
+| **temperature**       | `float`            | Controls randomness in output (0.0 to 1.0)                       |
+| **max_tokens**        | `int`              | Maximum number of tokens to generate                             |
+| **top_p**             | `float`            | Controls diversity of output (0.0 to 1.0)                        |
+| **frequency_penalty** | `float`            | Penalizes new tokens based on their frequency in the text so far |
+| **presence_penalty**  | `float`            | Penalizes new tokens based on their presence in the text so far  |
+| **stop**              | `str`, `List[str]` | Sequence(s) to stop generation                                   |
+| **base_url**          | `str`              | The base URL for the API endpoint                                |
+| **api_key**           | `str`              | Your API key for authentication                                  |
 
 For a complete list of parameters and their descriptions, refer to the LLM class documentation.
 
-## 
+##
 
 [​
 
@@ -129,8 +130,8 @@ Connecting to OpenAI-Compatible LLMs
 
 You can connect to OpenAI-compatible LLMs using either environment variables or by setting specific attributes on the LLM class:
 
-- 
-- 
+-
+-
 
 Copy
 
@@ -142,7 +143,7 @@ os.environ["OPENAI_API_BASE"] = "https://api.your-provider.com/v1"
 os.environ["OPENAI_MODEL_NAME"] = "your-model-name"
 ```
 
-## 
+##
 
 [​
 
@@ -179,7 +180,7 @@ Copy
     )
 ```
 
-## 
+##
 
 [​
 
@@ -204,7 +205,7 @@ agent = Agent(llm=llm, ...)
 
 This is particularly useful when working with OpenAI-compatible APIs or when you need to specify a different endpoint for your chosen provider.
 
-## 
+##
 
 [​
 

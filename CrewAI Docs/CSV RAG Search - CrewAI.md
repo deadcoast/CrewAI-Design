@@ -9,13 +9,14 @@ description: "The `CSVSearchTool` is a powerful RAG (Retrieval-Augmented Generat
 tags:
   - "clippings"
 ---
+
 Tools
 
 # CSV RAG Search
 
 The `CSVSearchTool` is a powerful RAG (Retrieval-Augmented Generation) tool designed for semantic searches within a CSV file’s content.
 
-# 
+#
 
 [​
 
@@ -25,7 +26,7 @@ The `CSVSearchTool` is a powerful RAG (Retrieval-Augmented Generation) tool desi
 
 **Experimental**: We are still working on improving tools, so there might be unexpected behavior or changes in the future.
 
-## 
+##
 
 [​
 
@@ -35,7 +36,7 @@ Description
 
 This tool is used to perform a RAG (Retrieval-Augmented Generation) search within a CSV file’s content. It allows users to semantically search for queries in the content of a specified CSV file. This feature is particularly useful for extracting information from large CSV datasets where traditional search methods might be inefficient. All tools with “Search” in their name, including CSVSearchTool, are RAG tools designed for searching different sources of data.
 
-## 
+##
 
 [​
 
@@ -43,7 +44,7 @@ This tool is used to perform a RAG (Retrieval-Augmented Generation) search withi
 
 Installation
 
-Install the crewai\_tools package
+Install the crewai_tools package
 
 Copy
 
@@ -51,7 +52,7 @@ Copy
 pip install 'crewai[tools]'
 ```
 
-## 
+##
 
 [​
 
@@ -66,18 +67,18 @@ Copy
 ```python
 from crewai_tools import CSVSearchTool
 
-# Initialize the tool with a specific CSV file. 
+# Initialize the tool with a specific CSV file.
 # This setup allows the agent to only search the given CSV file.
 tool = CSVSearchTool(csv='path/to/your/csvfile.csv')
 
 # OR
 
-# Initialize the tool without a specific CSV file. 
+# Initialize the tool without a specific CSV file.
 # Agent will need to provide the CSV path at runtime.
 tool = CSVSearchTool()
 ```
 
-## 
+##
 
 [​
 
@@ -87,11 +88,11 @@ Arguments
 
 The following parameters can be used to customize the `CSVSearchTool`’s behavior:
 
-| Argument | Type | Description |
-| --- | --- | --- |
-| **csv** | `string` | *Optional*. The path to the CSV file you want to search. This is a mandatory argument if the tool was initialized without a specific CSV file; otherwise, it is optional. |
+| Argument | Type     | Description                                                                                                                                                               |
+| -------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **csv**  | `string` | _Optional_. The path to the CSV file you want to search. This is a mandatory argument if the tool was initialized without a specific CSV file; otherwise, it is optional. |
 
-## 
+##
 
 [​
 

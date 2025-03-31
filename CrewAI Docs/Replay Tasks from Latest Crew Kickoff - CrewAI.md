@@ -9,13 +9,14 @@ description: "Replay tasks from the latest crew.kickoff(...)"
 tags:
   - "clippings"
 ---
+
 How to Guides
 
 # Replay Tasks from Latest Crew Kickoff
 
 Replay tasks from the latest crew.kickoff(…)
 
-## 
+##
 
 [​
 
@@ -29,7 +30,7 @@ You must run `crew.kickoff()` before you can replay a task. Currently, only the 
 
 Here’s an example of how to replay from a task:
 
-### 
+###
 
 [​
 
@@ -51,7 +52,7 @@ Navigate to the directory where your CrewAI project is located.
 
 Run the following commands:
 
-To view the latest kickoff task\_ids use:
+To view the latest kickoff task_ids use:
 
 Copy
 
@@ -69,7 +70,7 @@ crewai replay -t <task_id>
 
 Ensure `crewai` is installed and configured correctly in your development environment.
 
-### 
+###
 
 [​
 
@@ -81,7 +82,7 @@ To replay from a task programmatically, use the following steps:
 
 1
 
-Specify the \`task\_id\` and input parameters for the replay process.
+Specify the \`task_id\` and input parameters for the replay process.
 
 Specify the `task_id` and input parameters for the replay process.
 
@@ -110,7 +111,7 @@ Copy
       raise Exception(f"An unexpected error occurred: {e}")
 ```
 
-## 
+##
 
 [​
 

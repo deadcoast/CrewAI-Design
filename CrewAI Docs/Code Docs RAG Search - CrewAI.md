@@ -9,13 +9,14 @@ description: "The `CodeDocsSearchTool` is a powerful RAG (Retrieval-Augmented Ge
 tags:
   - "clippings"
 ---
+
 Tools
 
 # Code Docs RAG Search
 
 The `CodeDocsSearchTool` is a powerful RAG (Retrieval-Augmented Generation) tool designed for semantic searches within code documentation.
 
-# 
+#
 
 [​
 
@@ -25,7 +26,7 @@ The `CodeDocsSearchTool` is a powerful RAG (Retrieval-Augmented Generation) tool
 
 **Experimental**: We are still working on improving tools, so there might be unexpected behavior or changes in the future.
 
-## 
+##
 
 [​
 
@@ -35,7 +36,7 @@ Description
 
 The CodeDocsSearchTool is a powerful RAG (Retrieval-Augmented Generation) tool designed for semantic searches within code documentation. It enables users to efficiently find specific information or topics within code documentation. By providing a `docs_url` during initialization, the tool narrows down the search to that particular documentation site. Alternatively, without a specific `docs_url`, it searches across a wide array of code documentation known or discovered throughout its execution, making it versatile for various documentation search needs.
 
-## 
+##
 
 [​
 
@@ -43,7 +44,7 @@ The CodeDocsSearchTool is a powerful RAG (Retrieval-Augmented Generation) tool d
 
 Installation
 
-To start using the CodeDocsSearchTool, first, install the crewai\_tools package via pip:
+To start using the CodeDocsSearchTool, first, install the crewai_tools package via pip:
 
 Copy
 
@@ -51,7 +52,7 @@ Copy
 pip install 'crewai[tools]'
 ```
 
-## 
+##
 
 [​
 
@@ -68,20 +69,20 @@ Copy
 ```python
 from crewai_tools import CodeDocsSearchTool
 
-# To search any code documentation content 
+# To search any code documentation content
 # if the URL is known or discovered during its execution:
 tool = CodeDocsSearchTool()
 
 # OR
 
-# To specifically focus your search on a given documentation site 
+# To specifically focus your search on a given documentation site
 # by providing its URL:
 tool = CodeDocsSearchTool(docs_url='https://docs.example.com/reference')
 ```
 
 Substitute ‘[https://docs.example.com/reference](https://docs.example.com/reference)’ with your target documentation URL and ‘How to use search tool’ with the search query relevant to your needs.
 
-## 
+##
 
 [​
 
@@ -91,11 +92,11 @@ Arguments
 
 The following parameters can be used to customize the `CodeDocsSearchTool`’s behavior:
 
-| Argument | Type | Description |
-| --- | --- | --- |
-| **docs\_url** | `string` | *Optional*. Specifies the URL of the code documentation to be searched. |
+| Argument     | Type     | Description                                                             |
+| ------------ | -------- | ----------------------------------------------------------------------- |
+| **docs_url** | `string` | _Optional_. Specifies the URL of the code documentation to be searched. |
 
-## 
+##
 
 [​
 

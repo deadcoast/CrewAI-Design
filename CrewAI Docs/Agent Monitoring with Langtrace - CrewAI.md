@@ -9,13 +9,14 @@ description: "How to monitor cost, latency, and performance of CrewAI Agents usi
 tags:
   - "clippings"
 ---
+
 How to Guides
 
 # Agent Monitoring with Langtrace
 
 How to monitor cost, latency, and performance of CrewAI Agents using Langtrace, an external observability tool.
 
-# 
+#
 
 [​
 
@@ -27,7 +28,7 @@ Langtrace is an open-source, external tool that helps you set up observability a
 
 ![Overview of a select series of agent session runs](https://mintlify.s3.us-west-1.amazonaws.com/crewai/images/langtrace1.png) ![Overview of agent traces](https://mintlify.s3.us-west-1.amazonaws.com/crewai/images/langtrace2.png) ![Overview of llm traces in details](https://mintlify.s3.us-west-1.amazonaws.com/crewai/images/langtrace3.png)
 
-## 
+##
 
 [​
 
@@ -75,7 +76,7 @@ langtrace.init(api_key='<LANGTRACE_API_KEY>')
 from crewai import Agent, Task, Crew
 ```
 
-### 
+###
 
 [​
 
@@ -86,20 +87,25 @@ Features and Their Application to CrewAI
 1. **LLM Token and Cost Tracking**
 
 - Monitor the token usage and associated costs for each CrewAI agent interaction.
+
 2. **Trace Graph for Execution Steps**
 
 - Visualize the execution flow of your CrewAI tasks, including latency and logs.
 - Useful for identifying bottlenecks in your agent workflows.
+
 3. **Dataset Curation with Manual Annotation**
 
 - Create datasets from your CrewAI task outputs for future training or evaluation.
+
 4. **Prompt Versioning and Management**
 
 - Keep track of different versions of prompts used in your CrewAI agents.
 - Useful for A/B testing and optimizing agent performance.
+
 5. **Prompt Playground with Model Comparisons**
 
 - Test and compare different prompts and models for your CrewAI agents before deployment.
+
 6. **Testing and Evaluations**
 
 - Set up automated tests for your CrewAI agents and tasks.

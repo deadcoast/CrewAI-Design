@@ -9,13 +9,14 @@ description: "The `FirecrawlScrapeWebsiteTool` is designed to scrape websites an
 tags:
   - "clippings"
 ---
+
 Tools
 
 # Firecrawl Scrape Website
 
 The `FirecrawlScrapeWebsiteTool` is designed to scrape websites and convert them into clean markdown or structured data.
 
-# 
+#
 
 [​
 
@@ -23,7 +24,7 @@ The `FirecrawlScrapeWebsiteTool` is designed to scrape websites and convert them
 
 `FirecrawlScrapeWebsiteTool`
 
-## 
+##
 
 [​
 
@@ -33,7 +34,7 @@ Description
 
 [Firecrawl](https://firecrawl.dev/) is a platform for crawling and convert any website into clean markdown or structured data.
 
-## 
+##
 
 [​
 
@@ -50,7 +51,7 @@ Copy
 pip install firecrawl-py 'crewai[tools]'
 ```
 
-## 
+##
 
 [​
 
@@ -70,7 +71,7 @@ from crewai_tools import FirecrawlScrapeWebsiteTool
 tool = FirecrawlScrapeWebsiteTool(url='firecrawl.dev')
 ```
 
-## 
+##
 
 [​
 

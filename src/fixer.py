@@ -1,7 +1,7 @@
 """
 Enhanced Python Code Fixer with advanced refactoring and import optimization.
 Features:
-- Automatic import restructuring using libcst
+- Automatic import restructuring using libcs
 - Smart dependency resolution
 - Code transformation with advanced AST manipulation
 - Automatic import grouping and sorting
@@ -10,46 +10,40 @@ Features:
 - Type annotation addition
 """
 
-from pathlib import Path
-from typing import Dict, List, Set, Optional, Tuple
-import libcst as cst
-from libcst import matchers as m
-import networkx as nx
-from rich.console import Console
-from rich.progress import Progress, SpinnerColumn
 import ast
-import sympy
-from dataclasses import dataclass, field
-import rope.base.project
-from rope.refactor.restructure import Restructure
-import black
-import isort
-from functools import partial
 import difflib
 import itertools
+from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
-import toml
-import jinja2
-from pygments import highlight
-from pygments.lexers import PythonLexer
-from pygments.formatters import HtmlFormatter
-import numpy as np
-from typing import Dict, List, Set, Union
-import matplotlib.pyplot as plt
-import pandas as pd
-from scipy.optimize import minimize
-from scipy.optimize import linear_sum_assignment
-from sklearn.cluster import SpectralClustering
-from sklearn.metrics import euclidean_distances
-from scipy.spatial.distance import cdist
-from scipy.sparse.csgraph import minimum_spanning_tree
-from sklearn.cluster import KMeans
-from sklearn.decomposition import PCA
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any, Callable, Dict, List, Optional, Set, Tuple
 
+import black
+import isort
+import libcst as cst
+import networkx as nx
+import numpy as np
+import rope.base.project
 from analyzers.import_analyzer import ImportAnalyzer
-from transformers import RelativeImportTransformer
-from transformers import CircularDependencyTransformer
-from transformers import TypeAnnotationTransformer
+from pygments import highlight
+from pygments.formatters import HtmlFormatter
+from pygments.lexers import PythonLexer
+from rich.console import Console
+from rich.progress import Progress, SpinnerColumn
+from sklearn.cluster import SpectralClustering
+from sklearn.utils.linear_assignment_ import linear_sum_assignment
+
+# Import transformers from local module if available, otherwise use the ones defined here
+try:
+    from transformers import (
+        CircularDependencyTransformer,
+        RelativeImportTransformer,
+    )
+
+    _use_local_transformers = True
+except ImportError:
+    _use_local_transformers = False
 
 console = Console()
 
@@ -76,7 +70,7 @@ class FixStrategy:
     risk: float
     requires_manual_review: bool
     description: str
-    fix_function: callable
+    fix_function: Callable[..., Any]
 
 
 class SmartFixer:
@@ -100,7 +94,7 @@ class SmartFixer:
         # Performance optimization
         self.max_workers = self.config.get("max_workers", 4)
 
-    def fix_project(self) -> Dict[str, any]:
+    def fix_project(self) -> Dict[str, Any]:
         """Execute comprehensive project fixes"""
         with Progress(
             SpinnerColumn(), *Progress.get_default_columns(), console=console
@@ -148,7 +142,26 @@ class SmartFixer:
                 source = f.read()
 
             module = cst.parse_module(source)
-            visitor = ImportAnalyzer()
+
+            # Create a wrapper for ImportAnalyzer that inherits from cst.CSTVisitor
+            class ImportAnalyzerVisitor(cst.CSTVisitor):
+                def __init__(self):
+                    super().__init__()
+                    self.analyzer = ImportAnalyzer()
+                    self.imports = []
+
+                def on_visit(self, node):
+                    # Delegate to the actual analyzer
+                    (
+                        self.analyzer.on_visit(node)
+                        if hasattr(self.analyzer, "on_visit")
+                        else True
+                    )
+                    if hasattr(self.analyzer, "imports"):
+                        self.imports = self.analyzer.imports
+                    return True
+
+            visitor = ImportAnalyzerVisitor()
             module.visit(visitor)
 
             # Add to dependency graph
@@ -165,11 +178,11 @@ class SmartFixer:
 
     def _optimize_dependency_graph(self):
         """Optimize dependency graph using network flow algorithms"""
-        # Calculate optimal import ordering using topological sort
+        # Calculate optimal import ordering using topological sor
         try:
             optimal_order = list(nx.topological_sort(self.dependency_graph))
         except nx.NetworkXUnfeasible:
-            # Handle cycles by using feedback arc set
+            # Handle cycles by using feedback arc se
             edges_to_remove = self._minimum_feedback_arc_set()
             temp_graph = self.dependency_graph.copy()
             temp_graph.remove_edges_from(edges_to_remove)
@@ -220,7 +233,7 @@ class SmartFixer:
         """Apply fixes in optimal order based on dependency graph"""
         console.print("[bold green]Applying strategic fixes...")
 
-        # Sort strategies by priority and impact
+        # Sort strategies by priority and impac
         sorted_strategies = sorted(
             self.strategies, key=lambda s: (s.priority, -s.impact)
         )
@@ -237,14 +250,14 @@ class SmartFixer:
 
     def _should_apply_strategy(self, strategy: FixStrategy, module: str) -> bool:
         """Determine if a strategy should be applied based on context"""
-        # Calculate risk-adjusted impact
+        # Calculate risk-adjusted impac
         risk_adjusted_impact = strategy.impact * (1 - strategy.risk)
 
         # Consider module position in dependency graph
         centrality = nx.centr_betweenness_centrality(self.dependency_graph)
         module_importance = centrality.get(module, 0)
 
-        # Check module cluster assignment
+        # Check module cluster assignmen
         cluster = self.module_clusters[
             list(self.dependency_graph.nodes()).index(module)
         ]
@@ -319,7 +332,7 @@ class SmartFixer:
                 # Format with black
                 formatted_code = black.format_str(fix.fixed_code, mode=black.FileMode())
 
-                # Sort imports with isort
+                # Sort imports with isor
                 sorted_code = isort.code(formatted_code)
 
                 # Update fix operation
@@ -499,80 +512,49 @@ class SmartFixer:
         parts = list(file_path.parts)
         if "__init__.py" in parts:
             parts.remove("__init__.py")
-        return ".".join(parts[:-1] + [file_path.stem])
+            return ".".join(parts[:-1] + [file_path.stem])
 
 
-class RelativeImportTransformer(cst.CSTTransformer):
-    """Transform relative imports to absolute imports"""
+# Define RelativeImportTransformer only if not imported from transformers module
+if not _use_local_transformers:
 
-    def __init__(self, root_path: Path, file_path: Path):
-        self.root = root_path
-        self.file_path = file_path
-        self.made_changes = False
-        self.affected_imports = set()
+    class RelativeImportTransformer(cst.CSTTransformer):
+        """Transform relative imports to absolute imports"""
 
-    def leave_ImportFrom(
-        self, original_node: cst.ImportFrom, updated_node: cst.ImportFrom
-    ) -> cst.ImportFrom:
-        if original_node.relative:
-            self.made_changes = True
-            module_path = self._resolve_relative_import(
-                original_node.level,
-                original_node.module.value if original_node.module else "",
-            )
-            self.affected_imports.add(module_path)
+        def __init__(self, root_path: Path, file_path: Path):
+            self.root = root_path
+            self.file_path = file_path
+            self.made_changes = False
+            self.affected_imports: Set[str] = set()
 
-            return updated_node.with_changes(
-                relative=[], module=cst.Name(value=module_path)
-            )
-        return updated_node
+        def leave_ImportFrom(
+            self, original_node: cst.ImportFrom, updated_node: cst.ImportFrom
+        ) -> cst.ImportFrom:
+            if original_node.relative:
+                self.made_changes = True
+                module_path = self._resolve_relative_import(
+                    original_node.level,
+                    original_node.module.value if original_node.module else "",
+                )
+                self.affected_imports.add(module_path)
 
-    def _resolve_relative_import(self, level: int, module: str) -> str:
-        """Resolve relative import to absolute path"""
-        current_path = self.file_path.parent
-        for _ in range(level):
-            current_path = current_path.parent
+                return updated_node.with_changes(
+                    relative=[], module=cst.Name(value=module_path)
+                )
+            return updated_node
 
-        resolved = current_path.relative_to(self.root)
-        parts = list(resolved.parts)
-        if module:
-            parts.append(module)
+        def _resolve_relative_import(self, level: int, module: str) -> str:
+            """Resolve relative import to absolute path"""
+            current_path = self.file_path.paren
+            for _ in range(level):
+                current_path = current_path.paren
 
-        return ".".join(parts)
+            resolved = current_path.relative_to(self.root)
+            parts = list(resolved.parts)
+            if module:
+                parts.append(module)
 
-
-class CircularDependencyTransformer(cst.CSTTransformer):
-    """Transform code to break circular dependencies"""
-
-    def __init__(self, dependency_graph: nx.DiGraph):
-        self.graph = dependency_graph
-        self.made_changes = False
-        self.affected_modules = set()
-
-    def leave_ImportFrom(
-        self, original_node: cst.ImportFrom, updated_node: cst.ImportFrom
-    ) -> cst.ImportFrom:
-        module_name = original_node.module.value if original_node.module else ""
-        if self._is_part_of_cycle(module_name):
-            self.made_changes = True
-            self.affected_modules.add(module_name)
-            return self._create_interface_import(updated_node)
-        return updated_node
-
-    def _is_part_of_cycle(self, module_name: str) -> bool:
-        try:
-            cycles = list(nx.simple_cycles(self.graph))
-            return any(module_name in cycle for cycle in cycles)
-        except nx.NetworkXNoCycle:
-            return False
-
-    def _create_interface_import(self, node: cst.ImportFrom) -> cst.ImportFrom:
-        """Create interface-based import to break circular dependency"""
-        # Add 'typing' import for protocols
-        return cst.ImportFrom(
-            module=cst.Name("typing"),
-            names=[cst.ImportAlias(name=cst.Name("Protocol"))],
-        )
+            return ".".join(parts)
 
 
 class ImportOptimizer(cst.CSTTransformer):
@@ -582,7 +564,7 @@ class ImportOptimizer(cst.CSTTransformer):
         self.graph = dependency_graph
         self.clusters = module_clusters
         self.made_changes = False
-        self.affected_imports = set()
+        self.affected_imports: Set[str] = set()
 
     def leave_Module(
         self, original_node: cst.Module, updated_node: cst.Module

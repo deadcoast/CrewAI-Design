@@ -9,13 +9,14 @@ description: "Learn how to force tool output as the result in an Agent's task in
 tags:
   - "clippings"
 ---
+
 How to Guides
 
 # Force Tool Output as Result
 
 Learn how to force tool output as the result in an Agent’s task in CrewAI.
 
-## 
+##
 
 [​
 
@@ -25,7 +26,7 @@ Introduction
 
 In CrewAI, you can force the output of a tool as the result of an agent’s task. This feature is useful when you want to ensure that the tool output is captured and returned as the task result, avoiding any agent modification during the task execution.
 
-## 
+##
 
 [​
 
@@ -57,7 +58,7 @@ coding_agent = Agent(
 task_result = coding_agent.execute_task(task)
 ```
 
-## 
+##
 
 [​
 

@@ -9,13 +9,14 @@ description: "The `GithubSearchTool` is designed to search websites and convert 
 tags:
   - "clippings"
 ---
+
 Tools
 
 # Github Search
 
 The `GithubSearchTool` is designed to search websites and convert them into clean markdown or structured data.
 
-# 
+#
 
 [​
 
@@ -25,7 +26,7 @@ The `GithubSearchTool` is designed to search websites and convert them into clea
 
 We are still working on improving tools, so there might be unexpected behavior or changes in the future.
 
-## 
+##
 
 [​
 
@@ -35,7 +36,7 @@ Description
 
 The GithubSearchTool is a Retrieval-Augmented Generation (RAG) tool specifically designed for conducting semantic searches within GitHub repositories. Utilizing advanced semantic search capabilities, it sifts through code, pull requests, issues, and repositories, making it an essential tool for developers, researchers, or anyone in need of precise information from GitHub.
 
-## 
+##
 
 [​
 
@@ -43,7 +44,7 @@ The GithubSearchTool is a Retrieval-Augmented Generation (RAG) tool specifically
 
 Installation
 
-To use the GithubSearchTool, first ensure the crewai\_tools package is installed in your Python environment:
+To use the GithubSearchTool, first ensure the crewai_tools package is installed in your Python environment:
 
 Copy
 
@@ -51,9 +52,9 @@ Copy
 pip install 'crewai[tools]'
 ```
 
-This command installs the necessary package to run the GithubSearchTool along with any other tools included in the crewai\_tools package.
+This command installs the necessary package to run the GithubSearchTool along with any other tools included in the crewai_tools package.
 
-## 
+##
 
 [​
 
@@ -86,7 +87,7 @@ tool = GithubSearchTool(
 )
 ```
 
-## 
+##
 
 [​
 
@@ -98,7 +99,7 @@ Arguments
 - `gh_token` : Your GitHub Personal Access Token (PAT) required for authentication. You can create one in your GitHub account settings under Developer Settings > Personal Access Tokens.
 - `content_types` : Specifies the types of content to include in your search. You must provide a list of content types from the following options: `code` for searching within the code, `repo` for searching within the repository’s general information, `pr` for searching within pull requests, and `issue` for searching within issues. This field is mandatory and allows tailoring the search to specific content types within the GitHub repository.
 
-## 
+##
 
 [​
 

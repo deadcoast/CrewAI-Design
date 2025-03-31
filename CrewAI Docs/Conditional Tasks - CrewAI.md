@@ -9,13 +9,14 @@ description: "Learn how to use conditional tasks in a crewAI kickoff"
 tags:
   - "clippings"
 ---
+
 How to Guides
 
 # Conditional Tasks
 
 Learn how to use conditional tasks in a crewAI kickoff
 
-## 
+##
 
 [​
 
@@ -25,7 +26,7 @@ Introduction
 
 Conditional Tasks in crewAI allow for dynamic workflow adaptation based on the outcomes of previous tasks. This powerful feature enables crews to make decisions and execute tasks selectively, enhancing the flexibility and efficiency of your AI-driven processes.
 
-## 
+##
 
 [​
 

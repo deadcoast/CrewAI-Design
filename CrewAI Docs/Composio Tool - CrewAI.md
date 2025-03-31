@@ -9,13 +9,14 @@ description: "The `ComposioTool` is a wrapper around the composio set of tools a
 tags:
   - "clippings"
 ---
+
 Tools
 
 # Composio Tool
 
 The `ComposioTool` is a wrapper around the composio set of tools and gives your agent access to a wide variety of tools from the Composio SDK.
 
-# 
+#
 
 [​
 
@@ -23,7 +24,7 @@ The `ComposioTool` is a wrapper around the composio set of tools and gives your 
 
 `ComposioTool`
 
-## 
+##
 
 [​
 
@@ -33,7 +34,7 @@ Description
 
 This tools is a wrapper around the composio set of tools and gives your agent access to a wide variety of tools from the Composio SDK.
 
-## 
+##
 
 [​
 
@@ -52,7 +53,7 @@ pip install 'crewai[tools]'
 
 after the installation is complete, either run `composio login` or export your composio API key as `COMPOSIO_API_KEY`.
 
-## 
+##
 
 [​
 

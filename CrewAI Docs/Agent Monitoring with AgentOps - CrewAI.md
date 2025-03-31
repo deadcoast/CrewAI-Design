@@ -9,13 +9,14 @@ description: "Understanding and logging your agent performance with AgentOps."
 tags:
   - "clippings"
 ---
+
 How to Guides
 
 # Agent Monitoring with AgentOps
 
 Understanding and logging your agent performance with AgentOps.
 
-# 
+#
 
 [​
 
@@ -25,7 +26,7 @@ Introduction
 
 Observability is a key aspect of developing and deploying conversational AI agents. It allows developers to understand how their agents are performing, how their agents are interacting with users, and how their agents use external tools and APIs. AgentOps is a product independent of CrewAI that provides a comprehensive observability solution for agents.
 
-## 
+##
 
 [​
 
@@ -37,7 +38,7 @@ AgentOps
 
 At a high level, AgentOps gives you the ability to monitor cost, token usage, latency, agent failures, session-wide statistics, and more. For more info, check out the [AgentOps Repo](https://github.com/AgentOps-AI/agentops).
 
-### 
+###
 
 [​
 
@@ -51,7 +52,7 @@ Additionally, AgentOps provides session drilldowns for viewing Crew agent intera
 
 ![Overview of a select series of agent session runs](https://mintlify.s3.us-west-1.amazonaws.com/crewai/images/agentops-overview.png) ![Overview of session drilldowns for examining agent runs](https://mintlify.s3.us-west-1.amazonaws.com/crewai/images/agentops-session.png) ![Viewing a step-by-step agent replay execution graph](https://mintlify.s3.us-west-1.amazonaws.com/crewai/images/agentops-replay.png)
 
-### 
+###
 
 [​
 
@@ -70,7 +71,7 @@ Features
 - **Compliance and Security**: Create audit logs and detect potential threats such as profanity and PII leaks.
 - **Prompt Injection Detection**: Identify potential code injection and secret leaks.
 
-### 
+###
 
 [​
 
@@ -131,7 +132,7 @@ agentops.init()
 
 This will initiate an AgentOps session as well as automatically track Crew agents. For further info on how to outfit more complex agentic systems, check out the [AgentOps documentation](https://docs.agentops.ai/) or join the [Discord](https://discord.gg/j4f3KbeH).
 
-### 
+###
 
 [​
 
@@ -159,7 +160,7 @@ Example of a Crew agent that generates Instagram posts.
 
 ](https://github.com/joaomdmoura/crewAI-examples/tree/main/instagram_post)
 
-### 
+###
 
 [​
 
@@ -171,7 +172,7 @@ To get started, create an [AgentOps account](https://agentops.ai/?=crew).
 
 For feature requests or bug reports, please reach out to the AgentOps team on the [AgentOps Repo](https://github.com/AgentOps-AI/agentops).
 
-#### 
+####
 
 [​
 

@@ -9,13 +9,14 @@ description: "The `TXTSearchTool` is designed to perform a RAG (Retrieval-Augmen
 tags:
   - "clippings"
 ---
+
 Tools
 
 # TXT RAG Search
 
 The `TXTSearchTool` is designed to perform a RAG (Retrieval-Augmented Generation) search within the content of a text file.
 
-# 
+#
 
 [​
 
@@ -25,7 +26,7 @@ The `TXTSearchTool` is designed to perform a RAG (Retrieval-Augmented Generation
 
 We are still working on improving tools, so there might be unexpected behavior or changes in the future.
 
-## 
+##
 
 [​
 
@@ -35,7 +36,7 @@ Description
 
 This tool is used to perform a RAG (Retrieval-Augmented Generation) search within the content of a text file. It allows for semantic searching of a query within a specified text file’s content, making it an invaluable resource for quickly extracting information or finding specific sections of text based on the query provided.
 
-## 
+##
 
 [​
 
@@ -53,7 +54,7 @@ pip install 'crewai[tools]'
 
 This command will download and install the TXTSearchTool along with any necessary dependencies.
 
-## 
+##
 
 [​
 
@@ -70,18 +71,18 @@ Copy
 ```python
 from crewai_tools import TXTSearchTool
 
-# Initialize the tool to search within any text file's content 
+# Initialize the tool to search within any text file's content
 # the agent learns about during its execution
 tool = TXTSearchTool()
 
 # OR
 
-# Initialize the tool with a specific text file, 
+# Initialize the tool with a specific text file,
 # so the agent can search within the given text file's content
 tool = TXTSearchTool(txt='path/to/text/file.txt')
 ```
 
-## 
+##
 
 [​
 
@@ -91,7 +92,7 @@ Arguments
 
 - `txt` (str): **Optional**. The path to the text file you want to search. This argument is only required if the tool was not initialized with a specific text file; otherwise, the search will be conducted within the initially provided text file.
 
-## 
+##
 
 [​
 

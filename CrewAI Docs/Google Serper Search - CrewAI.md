@@ -9,13 +9,14 @@ description: "The `SerperDevTool` is designed to search the internet and return 
 tags:
   - "clippings"
 ---
+
 Tools
 
 # Google Serper Search
 
 The `SerperDevTool` is designed to search the internet and return the most relevant results.
 
-# 
+#
 
 [​
 
@@ -25,7 +26,7 @@ The `SerperDevTool` is designed to search the internet and return the most relev
 
 We are still working on improving tools, so there might be unexpected behavior or changes in the future.
 
-## 
+##
 
 [​
 
@@ -35,7 +36,7 @@ Description
 
 This tool is designed to perform a semantic search for a specified query from a text’s content across the internet. It utilizes the [serper.dev](https://serper.dev/) API to fetch and display the most relevant search results based on the query provided by the user.
 
-## 
+##
 
 [​
 
@@ -51,7 +52,7 @@ Copy
 pip install 'crewai[tools]'
 ```
 
-## 
+##
 
 [​
 
@@ -72,7 +73,7 @@ from crewai_tools import SerperDevTool
 tool = SerperDevTool()
 ```
 
-## 
+##
 
 [​
 
@@ -86,7 +87,7 @@ To effectively use the `SerperDevTool`, follow these steps:
 2. **API Key Acquisition**: Acquire a `serper.dev` API key by registering for a free account at `serper.dev`.
 3. **Environment Configuration**: Store your obtained API key in an environment variable named `SERPER_API_KEY` to facilitate its use by the tool.
 
-## 
+##
 
 [​
 
@@ -96,15 +97,15 @@ Parameters
 
 The `SerperDevTool` comes with several parameters that will be passed to the API :
 
-- **search\_url**: The URL endpoint for the search API. (Default is `https://google.serper.dev/search`)
+- **search_url**: The URL endpoint for the search API. (Default is `https://google.serper.dev/search`)
 - **country**: Optional. Specify the country for the search results.
 - **location**: Optional. Specify the location for the search results.
 - **locale**: Optional. Specify the locale for the search results.
-- **n\_results**: Number of search results to return. Default is `10`.
+- **n_results**: Number of search results to return. Default is `10`.
 
 The values for `country`, `location`, `locale` and `search_url` can be found on the [Serper Playground](https://serper.dev/playground).
 
-## 
+##
 
 [​
 
@@ -168,7 +169,7 @@ print(tool.run(search_query="Jeux Olympiques"))
 # ---
 ```
 
-## 
+##
 
 [​
 

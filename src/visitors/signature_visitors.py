@@ -1,31 +1,9 @@
 """signature_visitors.py"""
 
-import ast
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+# No typing imports needed here
 
-from libcst import (
-    Array,
-    Class,
-    Enum,
-    Intersection,
-    List,
-    Literal,
-    Map,
-    Name,
-    Parameter,
-    Parameterized,
-    Primitive,
-    Signature,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-    Visitor,
-    Wildcard,
-    WildcardElement,
-)
+from src.visitors.visitor import Visitor
 
-from visitors.visitor import Visitor
 
 class SignatureVisitor(Visitor):
     def visit(self, signature):
@@ -59,73 +37,91 @@ class SignatureVisitor(Visitor):
         self.visit_union(signature.union)
         self.visit_intersection(signature.intersection)
         self.visit_literal(signature.literal)
-        
+
     def visit_signature(self, signature):
+        """Visit a signature node."""
         self.visit(signature)
 
     def visit_type(self, type):
+        """Visit a type node."""
         self.visit(type)
 
     def visit_typevar(self, typevar):
+        """Visit a typevar node."""
         self.visit(typevar)
 
     def visit_class(self, class_):
+        """Visit a class node."""
         self.visit(class_)
 
     def visit_array(self, array):
+        """Visit an array node."""
         self.visit(array)
 
     def visit_primitive(self, primitive):
+        """Visit a primitive node."""
         self.visit(primitive)
 
     def visit_method(self, method):
+        """Visit a method node."""
         self.visit(method)
-        
+
     def visit_parameterized(self, parameterized):
+        """Visit a parameterized node."""
         self.visit(parameterized)
-        
+
     def visit_wildcard(self, wildcard):
+        """Visit a wildcard node."""
         self.visit(wildcard)
-        
+
     def visit_bound(self, bound):
+        """Visit a bound node."""
         self.visit(bound)
-        
+
     def visit_annotation(self, annotation):
+        """Visit an annotation node."""
         self.visit(annotation)
-        
+
     def visit_element(self, element):
+        """Visit an element node."""
         self.visit(element)
-        
+
     def visit_name(self, name):
+        """Visit a name node."""
         self.visit(name)
-        
+
     def visit_value(self, value):
+        """Visit a value node."""
         self.visit(value)
-        
+
     def visit_list(self, list):
+        """Visit a list node."""
         self.visit(list)
-        
+
     def visit_map(self, map):
+        """Visit a map node."""
         self.visit(map)
-        
+
     def visit_key(self, key):
+        """Visit a key node."""
         self.visit(key)
-        
-    def visit_value(self, value):
-        self.visit(value)
-        
+
     def visit_enum(self, enum):
+        """Visit an enum node."""
         self.visit(enum)
-         
+
     def visit_tuple(self, tuple):
+        """Visit a tuple node."""
         self.visit(tuple)
-        
+
     def visit_union(self, union):
+        """Visit a union node."""
         self.visit(union)
-        
+
     def visit_intersection(self, intersection):
+        """Visit an intersection node."""
         self.visit(intersection)
-        
+
     def visit_literal(self, literal):
+        """Visit a literal node."""
         self.visit(literal)
-        
